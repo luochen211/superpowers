@@ -25,6 +25,7 @@ Write the test first. Watch it fail. Write minimal code to pass.
 - Throwaway prototypes
 - Generated code
 - Configuration files
+- Layers without a test harness: follow **When a Layer Has No Test Harness** below
 
 Thinking "skip TDD just this once"? Stop. That's rationalization.
 
@@ -43,6 +44,33 @@ Write code before the test? Delete it. Start over.
 - Delete means delete
 
 Implement fresh from tests. Period.
+
+## When a Layer Has No Test Harness
+
+A working server suite or node-only runner may not exercise component or
+form wiring. A missing harness is a decision for your human partner, not
+a standing exemption for that layer.
+
+1. **Shrink the untested surface.** Check what the existing harness can
+   exercise. Extract rules such as validation, label formatting, selection
+   limits, or payload construction into units and test-drive them there.
+   Keep using TDD for layers that already have a harness.
+2. **Name the remaining gap and offer a choice.** List the wiring those
+   tests cannot cover. Describe the smallest suitable harness and its cost:
+   new dev dependencies, configuration changes, and setup/maintenance work.
+   Also describe a bounded manual or browser verification option, including
+   the behavior it would exercise and the regression risk it would leave.
+3. **Resolve the choice before crossing the gap.** Before adding the
+   harness or writing the untested wiring, get your human partner's
+   decision unless they already authorized that specific scope. An
+   unanswered offer is not approval for either path or for later work.
+   Continue the testable work while the choice is pending. An approved
+   manual path is a scoped exception, not TDD for the wiring.
+4. **Report the actual coverage.** Name the automated tests, the wiring
+   without tests, the manual/browser checks actually performed and their
+   results, and anything still unverified. Follow
+   **superpowers:verification-before-completion**; passing rule tests do
+   not prove component wiring works.
 
 ## Red-Green-Refactor
 
@@ -294,14 +322,15 @@ Extract validation for multiple fields if needed.
 
 Before marking work complete:
 
-- [ ] Every new function/method has a test
-- [ ] Watched each test fail before implementing
+- [ ] Every new function/method has a test or a specifically approved exception
+- [ ] Watched each test fail before implementing the behavior it covers
 - [ ] Each test failed for expected reason (feature missing, not typo)
 - [ ] Wrote minimal code to pass each test
 - [ ] All tests pass
 - [ ] Output pristine (no errors, warnings)
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
+- [ ] Approved exceptions name the untested code, actual verification, and remaining gaps
 
 Can't check all boxes? You skipped TDD. Start over.
 

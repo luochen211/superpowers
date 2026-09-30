@@ -28,6 +28,7 @@ BEFORE claiming any status or expressing satisfaction:
 2. RUN: Execute the FULL command (fresh, complete)
 3. READ: Full output, check exit code, count failures
 4. VERIFY: Does output confirm the claim?
+   - Check which changed behaviors the command actually exercises
    - If NO: State actual status with evidence
    - If YES: State claim WITH evidence
 5. ONLY THEN: Make the claim
@@ -72,6 +73,22 @@ Skip any step = lying, not verifying
 | "Different words so rule doesn't apply" | Spirit over letter |
 
 ## Key Patterns
+
+**Mixed automated and manual coverage:**
+
+When changed code has no automated tests, report these separately:
+- **Automated:** commands, results, and the layers/behaviors they cover.
+- **Manual/browser:** the interactions actually exercised and observed results.
+- **Gaps:** wiring without automated coverage, behavior not exercised by
+  either method, and remaining risk.
+
+For example: "Server and selection-rule tests pass. In the browser, Save
+persisted the selection after reload. Component/form wiring has no
+automated tests; keyboard submission and error rendering remain unverified."
+
+Pure-rule tests do not cover component wiring. A planned browser check is
+not evidence, and a passing suite does not establish coverage of untested
+code.
 
 **Tests:**
 ```
