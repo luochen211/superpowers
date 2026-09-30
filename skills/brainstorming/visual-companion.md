@@ -111,6 +111,8 @@ Use `--url-host` to control what hostname is printed in the returned URL JSON.
    - **Never reuse filenames** — each screen gets a fresh file
    - Use your file-creation tool — **never use cat/heredoc** (dumps noise into terminal)
    - Server automatically serves the newest file
+   - **Verify host-embedded previews through the server.** After pushing a screen, point any host's built-in browser pane at the complete `url` returned by the server, including `?key=…`, even if the host already opened a preview automatically. A direct `file:` or `data:` view of the screen bypasses `/files/` asset serving and helper injection. In that pane, verify that a `/files/` asset loads (if the screen uses one) and the injected helper is present (e.g., `typeof window.toggleSelect === 'function'`).
+   - **Check pane visibility before diagnosing animations.** Before trusting a scripted timing check, confirm that the browser pane is visible and active. Hidden panes can throttle or suspend `requestAnimationFrame` and `IntersectionObserver`, making working animations or reveals appear broken. Bring the pane into view and rerun the check before changing animation logic.
 
 2. **Tell user what to expect and end your turn:**
    - Remind them of the URL (every step, not just first)
